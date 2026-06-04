@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SANJOE SDMS</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+html,body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+}
+
+body{
+    background:
+    radial-gradient(circle at top left,rgba(96,165,250,.15),transparent 30%),
+    radial-gradient(circle at bottom right,rgba(167,139,250,.15),transparent 30%),
+    linear-gradient(135deg,#0f172a,#1e293b,#312e81);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+}
+
+#particles{
+    position:fixed;
+    inset:0;
+    z-index:1;
+}
+
+.card{
+    position:relative;
+    z-index:10;
+
+    width:92%;
+    max-width:550px;
+
+    padding:35px;
+
+    text-align:center;
+
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+
+    border:1px solid rgba(255,255,255,.15);
+
+    border-radius:32px;
+
+    box-shadow:
+    0 25px 60px rgba(0,0,0,.35),
+    inset 0 1px 0 rgba(255,255,255,.08);
+
+    animation:fadeUp 1s ease;
+}
+
+@keyframes fadeUp{
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.logo-ring{
+    width:160px;
+    height:160px;
+
+    margin:auto;
+
+    border-radius:50%;
+    padding:8px;
+
+    background:
+    linear-gradient(
+    135deg,
+    #ffffff,
+    #dbeafe,
+    #60a5fa,
+    #a78bfa
+    );
+
+    animation:
+    glow 3s infinite,
+    rotateRing 15s linear infinite;
+
+    box-shadow:
+    0 0 25px rgba(96,165,250,.5),
+    0 0 60px rgba(96,165,250,.3);
+}
+
+.logo-ring img{
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    object-fit:cover;
+    background:#fff;
+    animation:counterRotate 15s linear infinite;
+}
+
+@keyframes rotateRing{
+    from{transform:rotate(0deg);}
+    to{transform:rotate(360deg);}
+}
+
+@keyframes counterRotate{
+    from{transform:rotate(0deg);}
+    to{transform:rotate(-360deg);}
+}
+
+@keyframes glow{
+    0%{
+        box-shadow:
+        0 0 20px rgba(96,165,250,.4);
+    }
+    50%{
+        box-shadow:
+        0 0 40px rgba(96,165,250,.8),
+        0 0 80px rgba(167,139,250,.4);
+    }
+    100%{
+        box-shadow:
+        0 0 20px rgba(96,165,250,.4);
+    }
+}
+
+.welcome{
+    margin-top:20px;
+    color:#fff;
+    font-size:18px;
+    letter-spacing:4px;
+}
+
+.school-name{
+    font-size:42px;
+    font-weight:800;
+    margin-top:10px;
+
+    background:
+    linear-gradient(
+    90deg,
+    #60a5fa,
+    #ffffff,
+    #a78bfa,
+    #60a5fa);
+
+    background-size:300% 300%;
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+
+    animation:
+    shine 5s linear infinite,
+    floatText 4s ease-in-out infinite;
+}
+
+@keyframes shine{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+@keyframes floatText{
+    0%,100%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-8px);
+    }
+}
+
+.subtitle{
+    color:rgba(255,255,255,.75);
+    margin-top:8px;
+    font-size:14px;
+}
+
+/* CLOCK */
+
+.live-clock{
+    margin:25px 0;
+}
+
+#time{
+    color:#fff;
+    font-size:42px;
+    font-weight:800;
+    letter-spacing:3px;
+
+    text-shadow:
+    0 0 10px #60a5fa,
+    0 0 20px #60a5fa,
+    0 0 40px #60a5fa;
+
+    animation:pulseGlow 2s infinite;
+}
+
+#milliseconds{
+    color:#c084fc;
+    font-size:22px;
+    font-weight:700;
+
+    text-shadow:
+    0 0 10px #c084fc,
+    0 0 20px #c084fc;
+}
+
+#date{
+    margin-top:10px;
+    color:rgba(255,255,255,.85);
+    letter-spacing:2px;
+    font-size:13px;
+}
+
+@keyframes pulseGlow{
+    0%,100%{
+        transform:scale(1);
+    }
+    50%{
+        transform:scale(1.05);
+    }
+}
+
+/* BUTTON */
+
+.enter-btn{
+    border:none;
+    cursor:pointer;
+
+    padding:15px 45px;
+
+    border-radius:60px;
+
+    color:#fff;
+    font-size:18px;
+    font-weight:700;
+
+    background:
+    linear-gradient(
+    135deg,
+    #2563eb,
+    #7c3aed);
+
+    transition:.35s;
+}
+
+.enter-btn:hover{
+    transform:translateY(-5px);
+    box-shadow:
+    0 15px 40px rgba(37,99,235,.45);
+}
+
+.loader-overlay{
+    position:fixed;
+    inset:0;
+
+    background:rgba(0,0,0,.85);
+
+    display:none;
+    justify-content:center;
+    align-items:center;
+
+    z-index:999;
+}
+
+.loader-overlay.show{
+    display:flex;
+}
+
+.spinner{
+    width:80px;
+    height:80px;
+
+    border:8px solid rgba(255,255,255,.15);
+    border-top:8px solid #60a5fa;
+
+    border-radius:50%;
+
+    animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.card{
+    padding:25px;
+}
+
+.logo-ring{
+    width:120px;
+    height:120px;
+}
+
+.school-name{
+    font-size:28px;
+}
+
+#time{
+    font-size:30px;
+}
+
+#milliseconds{
+    font-size:16px;
+}
+
+.enter-btn{
+    width:100%;
+}
+
+.welcome{
+    font-size:14px;
+}
+
+.subtitle{
+    font-size:12px;
+}
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="particles"></canvas>
+
+<div class="card">
+
+<div class="logo-ring">
+<img src="https://www.sanjoepublicschool.in/SANJOEEMBLEM.png">
+</div>
+
+<div class="welcome">
+WELCOME TO
+</div>
+
+<div class="school-name">
+SANJOE SDMS
+</div>
+
+<div class="subtitle">
+Sanjoe Digital Management System
+</div>
+
+<div class="live-clock">
+<div id="time">00:00:00</div>
+<div id="milliseconds">000</div>
+<div id="date"></div>
+</div>
+
+<button class="enter-btn" onclick="openApp()">
+ENTER PORTAL
+</button>
+
+</div>
+
+<div class="loader-overlay" id="loader">
+<div class="spinner"></div>
+</div>
+
+<script>
+
+/* REDIRECT */
+
+function openApp(){
+
+document.getElementById("loader")
+.classList.add("show");
+
+setTimeout(()=>{
+
+window.location.href=
+"https://script.google.com/macros/s/AKfycbyn78u8_IhV9kYetaA8QF6lAP3dGA2Bpgy52DVozo1dttut5xe5w8nxOPgA3j1rSd9E/exec";
+
+},1500);
+
+}
+
+/* CLOCK */
+
+function updateClock(){
+
+const now=new Date();
+
+const h=String(now.getHours()).padStart(2,'0');
+const m=String(now.getMinutes()).padStart(2,'0');
+const s=String(now.getSeconds()).padStart(2,'0');
+const ms=String(now.getMilliseconds()).padStart(3,'0');
+
+document.getElementById("time")
+.innerHTML=`${h}:${m}:${s}`;
+
+document.getElementById("milliseconds")
+.innerHTML=`.${ms}`;
+
+document.getElementById("date")
+.innerHTML=now.toLocaleDateString(
+'en-IN',
+{
+weekday:'long',
+year:'numeric',
+month:'long',
+day:'numeric'
+}
+);
+
+}
+
+setInterval(updateClock,10);
+updateClock();
+
+/* PARTICLE NETWORK */
+
+const canvas=document.getElementById("particles");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+const mouse={
+x:null,
+y:null,
+radius:180
+};
+
+window.addEventListener("mousemove",e=>{
+mouse.x=e.x;
+mouse.y=e.y;
+});
+
+window.addEventListener("touchmove",e=>{
+mouse.x=e.touches[0].clientX;
+mouse.y=e.touches[0].clientY;
+});
+
+window.addEventListener("resize",()=>{
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+});
+
+class Particle{
+
+constructor(){
+
+this.x=Math.random()*canvas.width;
+this.y=Math.random()*canvas.height;
+
+this.size=Math.random()*2+1;
+
+this.speedX=(Math.random()-.5)*1.2;
+this.speedY=(Math.random()-.5)*1.2;
+}
+
+update(){
+
+this.x+=this.speedX;
+this.y+=this.speedY;
+
+if(this.x<0||this.x>canvas.width)
+this.speedX*=-1;
+
+if(this.y<0||this.y>canvas.height)
+this.speedY*=-1;
+
+let dx=mouse.x-this.x;
+let dy=mouse.y-this.y;
+
+let distance=Math.sqrt(dx*dx+dy*dy);
+
+if(distance<mouse.radius){
+
+let force=
+(mouse.radius-distance)
+/mouse.radius;
+
+this.x-=dx*force*0.03;
+this.y-=dy*force*0.03;
+}
+}
+
+draw(){
+
+ctx.beginPath();
+
+ctx.arc(
+this.x,
+this.y,
+this.size,
+0,
+Math.PI*2
+);
+
+ctx.fillStyle=
+"rgba(255,255,255,.9)";
+
+ctx.fill();
+}
+}
+
+const particles=[];
+
+for(let i=0;i<140;i++){
+particles.push(
+new Particle()
+);
+}
+
+function connect(){
+
+for(let a=0;a<particles.length;a++){
+
+for(let b=a;b<particles.length;b++){
+
+let dx=
+particles[a].x-particles[b].x;
+
+let dy=
+particles[a].y-particles[b].y;
+
+let distance=
+dx*dx+dy*dy;
+
+if(distance<10000){
+
+let opacity=
+1-distance/10000;
+
+ctx.strokeStyle=
+`rgba(96,165,250,${opacity})`;
+
+ctx.lineWidth=1;
+
+ctx.beginPath();
+
+ctx.moveTo(
+particles[a].x,
+particles[a].y
+);
+
+ctx.lineTo(
+particles[b].x,
+particles[b].y
+);
+
+ctx.stroke();
+}
+}
+}
+}
+
+function animate(){
+
+requestAnimationFrame(animate);
+
+ctx.clearRect(
+0,
+0,
+canvas.width,
+canvas.height
+);
+
+particles.forEach(p=>{
+
+p.update();
+p.draw();
+
+});
+
+connect();
+}
+
+animate();
+
+</script>
+
+</body>
+</html>
