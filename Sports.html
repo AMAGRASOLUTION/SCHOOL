@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Sanjoe Public School, Kaniyaram - Annual Sports Meet Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #090d16 0%, #111827 40%, #1e1b4b 100%);
+      --glass-card: rgba(15, 23, 42, 0.75);
+      --glass-border: rgba(255, 255, 255, 0.12);
+      --primary: #6366f1;
+      --primary-glow: rgba(99, 102, 241, 0.5);
+      --accent-cyan: #06b6d4;
+      --accent-pink: #ec4899;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --danger: #ef4444;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body, html {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: var(--bg-gradient);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Ambient Animated Background Grid & Particles */
+    .bg-animation {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      overflow: hidden;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .sports-particle {
+      position: absolute;
+      color: rgba(255, 255, 255, 0.05);
+      animation: floatSports 12s infinite ease-in-out;
+      font-size: 2.5rem;
+    }
+
+    .p1 { top: 15%; left: 8%; animation-delay: 0s; font-size: 3rem; }
+    .p2 { top: 70%; left: 12%; animation-delay: 3s; }
+    .p3 { top: 25%; right: 10%; animation-delay: 6s; font-size: 3.5rem; }
+    .p4 { top: 75%; right: 15%; animation-delay: 1.5s; }
+    .p5 { top: 50%; left: 50%; animation-delay: 4.5s; font-size: 4rem; }
+
+    @keyframes floatSports {
+      0%, 100% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.04; }
+      50% { transform: translateY(-25px) rotate(180deg) scale(1.15); opacity: 0.09; }
+    }
+
+    /* Ultra Modern Glassmorphic Login Overlay */
+    #loginOverlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(9, 13, 22, 0.92);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 1.5rem;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    #loginOverlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .login-box {
+      background: var(--glass-card);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 2.5rem 2rem;
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-icon {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, var(--primary), var(--accent-pink));
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      color: #fff;
+      font-size: 1.8rem;
+      box-shadow: 0 0 25px var(--primary-glow);
+    }
+
+    .login-box h2 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      margin-bottom: 0.4rem;
+      background: linear-gradient(90deg, #e0e7ff, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .login-box p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1.75rem;
+    }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 1.25rem;
+    }
+
+    .input-group i {
+      position: absolute;
+      left: 1.2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .login-input {
+      width: 100%;
+      padding: 0.95rem 1rem 0.95rem 3rem;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--glass-border);
+      border-radius: 14px;
+      color: #fff;
+      font-size: 1.05rem;
+      letter-spacing: 2px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .login-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 20px var(--primary-glow);
+    }
+
+    .btn-login {
+      width: 100%;
+      padding: 1rem;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--primary) 0%, #4f46e5 100%);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 10px 25px var(--primary-glow);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+    }
+
+    .btn-login:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 30px var(--primary-glow);
+    }
+
+    .error-msg {
+      color: var(--danger);
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-top: 0.8rem;
+      display: none;
+    }
+
+    .error-msg.show {
+      display: block;
+      animation: shake 0.3s ease;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
+    }
+
+    /* Top Entry Navigation Bar */
+    .entry-header {
+      position: relative;
+      z-index: 100;
+      background: var(--glass-card);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+
+    .brand-title {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, var(--primary), var(--accent-pink));
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.3rem;
+      box-shadow: 0 0 20px var(--primary-glow);
+      animation: pulseGlow 3s infinite alternate;
+    }
+
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 15px rgba(99, 102, 241, 0.4); transform: scale(1); }
+      100% { box-shadow: 0 0 25px rgba(236, 72, 153, 0.7); transform: scale(1.03); }
+    }
+
+    .brand-text h1 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, #e0e7ff, #38bdf8, #f472b6);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 6s linear infinite;
+      line-height: 1.2;
+      letter-spacing: 0.3px;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+
+    .brand-text p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .portal-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .btn-action {
+      padding: 0.55rem 0.95rem;
+      border-radius: 12px;
+      border: 1px solid var(--glass-border);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-main);
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+    }
+
+    .btn-action:hover {
+      background: rgba(99, 102, 241, 0.25);
+      border-color: var(--primary);
+      box-shadow: 0 0 15px var(--primary-glow);
+      transform: translateY(-2px);
+    }
+
+    /* Embedded Frame Container */
+    .portal-frame-container {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Sports Loading Animation Screen */
+    .portal-loader {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: var(--bg-gradient);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 50;
+      transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s ease;
+    }
+
+    .portal-loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    /* Animated Sports Orbit Loader */
+    .loader-orbit {
+      position: relative;
+      width: 90px;
+      height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .orbit-ring {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: 3px solid transparent;
+      border-top-color: var(--primary);
+      border-right-color: var(--accent-pink);
+      border-radius: 50%;
+      animation: spin 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+    }
+
+    .orbit-icon {
+      font-size: 2rem;
+      color: #38bdf8;
+      animation: pulseIcon 1.5s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes pulseIcon {
+      0%, 100% { transform: scale(0.9); opacity: 0.8; }
+      50% { transform: scale(1.15); opacity: 1; }
+    }
+
+    .loader-title {
+      margin-top: 1.5rem;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: 0.5px;
+    }
+
+    .loader-subtext {
+      margin-top: 0.35rem;
+      font-size: 0.825rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* Ultra Mobile View Enhancements */
+    @media (max-width: 640px) {
+      .entry-header {
+        padding: 0.6rem 0.85rem;
+      }
+
+      .brand-icon {
+        width: 38px;
+        height: 38px;
+        font-size: 1.1rem;
+        border-radius: 10px;
+      }
+
+      .brand-text h1 {
+        font-size: 0.925rem;
+      }
+
+      .brand-text p {
+        font-size: 0.7rem;
+      }
+
+      .btn-action span {
+        display: none;
+      }
+
+      .btn-action {
+        padding: 0.5rem 0.7rem;
+        border-radius: 10px;
+      }
+
+      .sports-particle {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Background Sports Particles -->
+  <div class="bg-animation">
+    <i class="fa-solid fa-trophy sports-particle p1"></i>
+    <i class="fa-solid fa-football sports-particle p2"></i>
+    <i class="fa-solid fa-basketball sports-particle p3"></i>
+    <i class="fa-solid fa-medal sports-particle p4"></i>
+    <i class="fa-solid fa-person-running sports-particle p5"></i>
+  </div>
+
+  <!-- Secure Login Screen -->
+  <div id="loginOverlay">
+    <div class="login-box">
+      <div class="login-icon">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+      <h2>SANJOE SPORTS MEET</h2>
+      <p>Enter Access Code to continue</p>
+
+      <form onsubmit="verifyAccess(event)">
+        <div class="input-group">
+          <i class="fa-solid fa-key"></i>
+          <input type="password" id="accessCode" class="login-input" placeholder="••••••••" maxlength="10" required autocomplete="off">
+        </div>
+        <button type="submit" class="btn-login">
+          <i class="fa-solid fa-right-to-bracket"></i> Login to Portal
+        </button>
+        <div id="errorMsg" class="error-msg">
+          <i class="fa-solid fa-circle-exclamation"></i> Invalid Access Code!
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Entry Header -->
+  <header class="entry-header">
+    <div class="brand-title">
+      <div class="brand-icon">
+        <i class="fa-solid fa-trophy"></i>
+      </div>
+      <div class="brand-text">
+        <h1>SANJOE PUBLIC SCHOOL, KANIYARAM</h1>
+        <p><i class="fa-solid fa-bolt" style="color: #f59e0b;"></i> Annual Sports Meet Portal</p>
+      </div>
+    </div>
+
+    <div class="portal-actions">
+      <button class="btn-action" onclick="reloadPortal()" title="Refresh Application">
+        <i class="fa-solid fa-rotate-right"></i>
+        <span>Reload</span>
+      </button>
+      <button class="btn-action" onclick="logoutPortal()" title="Logout">
+        <i class="fa-solid fa-power-off" style="color: #ef4444;"></i>
+        <span>Logout</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Embedded Web App Section -->
+  <main class="portal-frame-container">
+    <!-- Animated Sports Loader Screen -->
+    <div id="portalLoader" class="portal-loader">
+      <div class="loader-orbit">
+        <div class="orbit-ring"></div>
+        <i class="fa-solid fa-stopwatch orbit-icon"></i>
+      </div>
+      <div class="loader-title">SANJOE SPORTS MEET 2026</div>
+      <div class="loader-subtext">Initializing Registration Portal...</div>
+    </div>
+
+    <!-- Embedded Google Apps Script Application -->
+    <iframe 
+      id="sportsPortalFrame" 
+      allow="fullscreen"
+      onload="hideLoader()">
+    </iframe>
+  </main>
+
+  <script>
+    const _secSig = "864c25c2bc3407c6ddbe643aec9750b379fb4f2f3292037448feb7b2f5497f8a";
+
+    // Split URL string parts across multiple lines
+    const _part1 = "https://script.";
+    const _part2 = "google.com/macros/s/";
+    const _part3 = "AKfycbyHbX2PuQ5hKms8";
+    const _part4 = "NxHMT_LHjyT_wI0BFITp";
+    const _part5 = "X97cDpwZzlJQTvmn9sUv";
+    const _part6 = "RHcNvAMsJ4xzrg/exec";
+
+    function getTargetUrl() {
+      return _part1 + _part2 + _part3 + _part4 + _part5 + _part6;
+    }
+
+    window.onload = function() {
+      if (sessionStorage.getItem('_sanjoe_auth') === 'true') {
+        grantAccess();
+      }
+    };
+
+    async function hashInput(str) {
+      const msgBuffer = new TextEncoder().encode(str);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    async function verifyAccess(e) {
+      e.preventDefault();
+      const pwd = document.getElementById('accessCode').value.trim();
+      const err = document.getElementById('errorMsg');
+      
+      const computedHash = await hashInput(pwd);
+
+      if (computedHash === _secSig) {
+        sessionStorage.setItem('_sanjoe_auth', 'true');
+        err.classList.remove('show');
+        grantAccess();
+      } else {
+        err.classList.add('show');
+        document.getElementById('accessCode').value = '';
+      }
+    }
+
+    function grantAccess() {
+      document.getElementById('loginOverlay').classList.add('hidden');
+      const frame = document.getElementById('sportsPortalFrame');
+      if (!frame.src) {
+        frame.src = getTargetUrl();
+      }
+    }
+
+    function hideLoader() {
+      const loader = document.getElementById('portalLoader');
+      if (loader) {
+        setTimeout(() => {
+          loader.classList.add('hidden');
+        }, 300);
+      }
+    }
+
+    function reloadPortal() {
+      const loader = document.getElementById('portalLoader');
+      const frame = document.getElementById('sportsPortalFrame');
+      
+      if (loader) {
+        loader.classList.remove('hidden');
+      }
+      if (frame) {
+        frame.src = getTargetUrl();
+      }
+    }
+
+    function logoutPortal() {
+      sessionStorage.removeItem('_sanjoe_auth');
+      location.reload();
+    }
+  </script>
+
+</body>
+</html>
